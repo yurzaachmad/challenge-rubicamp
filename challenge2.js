@@ -1,10 +1,12 @@
-function deretKaskus(n){
+//function factorial 3 dan deret kaskus
+
+function deretKaskus(n){                             
     let kaskus = [];
     let final = []
    for(let i = 1; i <= n; i++){
         if (i <= n) {
-            kaskus.push(i * 3);
-        } 
+          kaskus.push(i * 3);
+        }    
    }
    for (let j = 0; j < kaskus.length; j++) {
     if(kaskus[j] % 5 == 0 && kaskus[j] % 6 ==0){
