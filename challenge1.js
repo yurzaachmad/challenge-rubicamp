@@ -4,8 +4,8 @@ function sum(){
         total += arguments[i];
     }
     return total
-}
+} 
 
 sum(1, 2);
 
-console.log(sum(1, 2))
+console.log(sum(1, 2, 5, 10))
