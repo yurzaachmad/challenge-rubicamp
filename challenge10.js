@@ -9,7 +9,7 @@ rl.prompt();
 
 rl.on('line', (line) => {
   sentencesManipulation(line)
-  console.log(sentencesManipulation(line));
+  console.log(`hasil konversi: ${sentencesManipulation(line)}`);
   rl.prompt();
 }).on('close', () => {
   console.log('Good bye!');
