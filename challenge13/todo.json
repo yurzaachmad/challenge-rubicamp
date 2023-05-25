@@ -1,0 +1,6 @@
+[
+  { "todo": "saya akan memasak", "complete": true, "tag": ["masak", "bayam"] },
+  { "todo": "saya akan marton", "complete": false, "tag": ["lari", "2km"] },
+  { "todo": "saya mau pergi kepasar", "complete": false, "tag": "" },
+  { "todo": "saya pergi sekolah", "complete": true, "tag": "" }
+]
