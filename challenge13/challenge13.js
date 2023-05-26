@@ -8,32 +8,47 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-const argument = process.argv[2];
-const kata = argument.split(":")[1];
+// const argument = process.argv[2];
+
 const argv2 = process.argv[2];
 const index = process.argv[3];
-if (argv2 === undefined) {
-  console.log(`>>> JS TODO <<<
-      $ node challenge13.js <command>
-      $ node challenge13.js list
-      $ node challenge13.js task <task_id>
-      $ node challenge13.js add <task-content>
-      $ node challenge13.js delete <task_id>
-      $ node challenge13.js complete <task_id>
-      $ node challenge13.js uncomplete <task_id>
-      $ node challenge13.js list:outstanding asc|desc
-      $ node challenge13.js list:completed asc|desc
-      $ node challenge13.js tag <task_id> <tag_name_1> <tag_name2>...<tag_name_N>
-      $ node challenge13.js filter:<tag_name>`);
-  rl.close();
-}
+const filter = process.argv[2];
+// if (argv2 == undefined) {
+//   console.log(`>>> JS TODO <<<
+//       $ node challenge13.js <command>
+//       $ node challenge13.js list
+//       $ node challenge13.js task <task_id>
+//       $ node challenge13.js add <task-content>
+//       $ node challenge13.js delete <task_id>
+//       $ node challenge13.js complete <task_id>
+//       $ node challenge13.js uncomplete <task_id>
+//       $ node challenge13.js list:outstanding asc|desc
+//       $ node challenge13.js list:completed asc|desc
+//       $ node challenge13.js tag <task_id> <tag_name_1> <tag_name2>...<tag_name_N>
+//       $ node challenge13.js filter:<tag_name>`);
+//   rl.close();
+// }
 const args = process.argv;
 let sentences = args.splice(3, argv.length);
 let words = sentences.join(" ");
-
 let tags = sentences.slice(1, sentences.length);
 let n = sentences[0];
 switch (argv2) {
+  case undefined:
+    console.log(`>>> JS TODO <<<
+    $ node challenge13.js <command>
+    $ node challenge13.js list
+    $ node challenge13.js task <task_id>
+    $ node challenge13.js add <task-content>
+    $ node challenge13.js delete <task_id>
+    $ node challenge13.js complete <task_id>
+    $ node challenge13.js uncomplete <task_id>
+    $ node challenge13.js list:outstanding asc|desc
+    $ node challenge13.js list:completed asc|desc
+    $ node challenge13.js tag <task_id> <tag_name_1> <tag_name2>...<tag_name_N>
+    $ node challenge13.js filter:<tag_name>`);
+    rl.close();
+    break;
   case "list":
     for (let i = 0; i < file.length; i++) {
       if (file[i].complete == true) {
@@ -134,6 +149,16 @@ switch (argv2) {
       rl.close();
       break;
     }
+  case "task":
+    for (let i = 0; i < file.length; i++) {
+      if ([i + 1] == index) {
+        console.log(
+          `${i + 1}. ${file[i].complete ? "[X]" : "[ ]"} ${file[i].todo}`
+        );
+      }
+    }
+    rl.close();
+    break;
   case "tag":
     console.log(
       `Tag '${tags}' telah di tambahkan ke daftar "${file[index - 1].todo}"`
@@ -145,16 +170,6 @@ switch (argv2) {
         return console.log(err);
       }
     });
-    rl.close();
-    break;
-  case argument:
-    for (let i = 0; i < file.length; i++) {
-      if (file[i].todo.toString().includes(kata) == true) {
-        console.log(
-          `${i + 1}. ${file[i].complete ? "[X]" : "[ ]"} ${file[i].todo}`
-        );
-      }
-    }
     rl.close();
     break;
   case "help":
@@ -170,6 +185,17 @@ switch (argv2) {
   $ node challenge13.js list:completed asc|desc
   $ node challenge13.js tag <task_id> <tag_name_1> <tag_name2>...<tag_name_N>
   $ node challenge13.js filter:<tag_name>`);
+    rl.close();
+    break;
+  case filter:
+    const kata = filter.split(":")[1];
+    for (let i = 0; i < file.length; i++) {
+      if (file[i].tag.toString().includes(kata) == true) {
+        console.log(
+          `${i + 1}. ${file[i].complete ? "[X]" : "[ ]"} ${file[i].todo}`
+        );
+      }
+    }
     rl.close();
     break;
 }
