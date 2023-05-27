@@ -10,9 +10,8 @@ CREATE TABLE kontrak(idKontrak VARCHAR(4) PRIMARY KEY NOT NULL, nilai VARCHAR(2)
 INSERT into dosen (nip, namaDosen, alamat) values ('A01', 'bagus', 'purbalingga'), ('A02', 'abdan', 'semarang'), ('A03', 'ihsan', 'kendari'); 
 INSERT into mahasiswa (nim, nama, umur, alamat, idJurusan) values ('N01', 'andre', '18', 'kalimantan', 'J01'), ('N02', 'iqbal', '23', 'bogor', 'J02'), ('N03', 'aidil', '20', 'lamongan', 'J03');
 INSERT into jurusan (idJurusan, namaJurusan) values ('J01', 'informatika'), ('J02', 'pendidikan'), ('J03', 'teknik'), ('J04', 'sastra');
-INSERT into mataKuliah (idMataKuliah, namaMataKuliah, sks) values ('M01', 'sistem operasi', '9'), ('M02', 'rancangan bahasa data', '12'), ('M03', 'analisa proses bisnis', '13'), ('M04', 'algoritma dan struktur data', '9'), ('M05', 'data mining', '8');
-INSERT into kontrak(idKontrak, nilai, nip, idMataKuliah, nim) values ('K001', 'A', 'A01', 'M02', 'N01'), ('K002', 'D', 'A02', 'M05', 'N02'), ('K003', 'A', 'A03', 'M03', 'N03');
-INSERT into kontrak(idKontrak, nilai, nip, idMataKuliah, nim) values ('K004', 'B', 'A01', 'M05', 'N03'), ('K005', 'A', 'A02', 'M01', 'N02'), ('K006', 'D', 'A03', 'M02', 'N01');
+INSERT into mataKuliah (idMataKuliah, namaMataKuliah, sks) values ('M01', 'sistem operasi', '4'), ('M02', 'rancangan bahasa data', '5'), ('M03', 'analisa proses bisnis', '5'), ('M04', 'algoritma dan struktur data', '4'), ('M05', 'data mining', '3');
+INSERT into kontrak(idKontrak, nilai, nip, idMataKuliah, nim) values ('K001', 'A', 'A01', 'M02', 'N01'), ('K002', 'D', 'A02', 'M05', 'N02'), ('K003', 'A', 'A03', 'M03', 'N03'), ('K004', 'B', 'A01', 'M05', 'N03'), ('K005', 'A', 'A02', 'M01', 'N02'), ('K006', 'D', 'A03', 'M02', 'N01'), ('K007', 'E', 'A01', 'M02', 'N01'), ('K008', 'E', 'A01', 'M02', 'N01');
 
 /* query sql */
 
@@ -29,10 +28,13 @@ JOIN kontrak on mahasiswa.nim = kontrak.nim
 where nilai in ('A', 'B');
 
 /* 4. tampilkan mahasiswa yang memiliki sks di atas 10 */
-SELECT idkontrak, nama, sks 
+SELECT mahasiswa.nama AS nama_mahasiswa, SUM(mataKuliah.sks) AS total_sks 
 FROM kontrak 
-INNER JOIN mataKuliah on mataKuliah.idMataKuliah = kontrak.idMataKuliah 
-INNER JOIN mahasiswa on mahasiswa.nim = kontrak.nim where sks > 10;
+JOIN mahasiswa ON kontrak.nim = mahasiswa.nim
+JOIN mataKuliah ON kontrak.idMataKuliah = mataKuliah.idMataKuliah
+GROUP BY mahasiswa.nama
+HAVING SUM(mataKuliah.sks) > 10;
+
 
 /* 5. tampilkan mahasiswa yang mengontrak mata kuliah data mining */
 SELECT idkontrak, nama, namaMataKuliah 
@@ -40,10 +42,11 @@ FROM kontrak INNER JOIN mataKuliah on mataKuliah.idMataKuliah = kontrak.idMataKu
 INNER JOIN mahasiswa on mahasiswa.nim = kontrak.nim where namaMataKuliah = 'data mining';
 
 /* 6. tampilkan jumlah mahasiswa untuk setiap dosen */
-SELECT dosen.namaDosen AS nama_dosen, COUNT(kontrak.nim) AS jumlah_mahasiswa
+SELECT dosen.namaDosen AS nama_dosen, COUNT(DISTINCT kontrak.nim) AS jumlah_mahasiswa
 FROM kontrak
 JOIN dosen ON kontrak.nip = dosen.nip
 GROUP BY dosen.namaDosen;
+
 
 /* 7. urutkan mahasiswa berdasarkan umurnya */
 SELECT nama, umur
