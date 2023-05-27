@@ -23,13 +23,21 @@ SELECT * FROM mahasiswa JOIN jurusan using(idJurusan);
 SELECT * FROM mahasiswa where umur < 20;
 
 /* 3. tampilkan mahasiswa yang nilai 'B' ke atas */
-SELECT nama, nilai FROM mahasiswa JOIN kontrak on mahasiswa.nim = kontrak.nim where nilai in ('A', 'B');
+SELECT nama, nilai 
+FROM mahasiswa 
+JOIN kontrak on mahasiswa.nim = kontrak.nim 
+where nilai in ('A', 'B');
 
 /* 4. tampilkan mahasiswa yang memiliki sks di atas 10 */
-SELECT idkontrak, nama, sks FROM kontrak INNER JOIN mataKuliah on mataKuliah.idMataKuliah = kontrak.idMataKuliah INNER JOIN mahasiswa on mahasiswa.nim = kontrak.nim where sks > 10;
+SELECT idkontrak, nama, sks 
+FROM kontrak 
+INNER JOIN mataKuliah on mataKuliah.idMataKuliah = kontrak.idMataKuliah 
+INNER JOIN mahasiswa on mahasiswa.nim = kontrak.nim where sks > 10;
 
 /* 5. tampilkan mahasiswa yang mengontrak mata kuliah data mining */
-SELECT idkontrak, nama, namaMataKuliah FROM kontrak INNER JOIN mataKuliah on mataKuliah.idMataKuliah = kontrak.idMataKuliah INNER JOIN mahasiswa on mahasiswa.nim = kontrak.nim where namaMataKuliah = 'data mining';
+SELECT idkontrak, nama, namaMataKuliah 
+FROM kontrak INNER JOIN mataKuliah on mataKuliah.idMataKuliah = kontrak.idMataKuliah 
+INNER JOIN mahasiswa on mahasiswa.nim = kontrak.nim where namaMataKuliah = 'data mining';
 
 /* 6. tampilkan jumlah mahasiswa untuk setiap dosen */
 SELECT dosen.namaDosen AS nama_dosen, COUNT(kontrak.nim) AS jumlah_mahasiswa
