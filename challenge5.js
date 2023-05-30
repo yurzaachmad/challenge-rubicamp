@@ -10,6 +10,8 @@ function stringManipulation(word) {
   ) {
     return word;
   } else {
+    //bisa pakai spread operator dibawah
+    //[...word] didalam variable chars
     const chars = word.split("");
     if (
       chars[0] != "a" ||
