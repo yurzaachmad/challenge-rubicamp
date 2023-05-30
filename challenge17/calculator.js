@@ -1,4 +1,4 @@
-import { Calculator, PI } from "./challenge17.js";
+import Calculator, { PI } from "./challenge17.js";
 const calc = new Calculator();
 calc.add(10).substract(5).result();
 calc.add(3).multiply(4).divide(6).result();
