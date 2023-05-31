@@ -1,1 +1,9 @@
-[{"todo":"saya akan memasak","complete":true,"tag":["masak","bayam"]},{"todo":"saya akan marton","complete":false,"tag":["capek"]},{"todo":"saya mau pergi kepasar","complete":true,"tag":""},{"todo":"saya pergi sekolah","complete":true,"tag":""},{"todo":"saya futsal","complete":false,"tag":["capek","bola"]},{"todo":"saya pulang futsal","complete":false,"tag":""}]
+[
+  { "todo": "saya akan memasak", "complete": true, "tag": ["masak", "bayam"] },
+  { "todo": "saya akan marton", "complete": false, "tag": ["capek"] },
+  { "todo": "saya mau pergi kepasar", "complete": true, "tag": "" },
+  { "todo": "saya pergi sekolah", "complete": true, "tag": "" },
+  { "todo": "saya futsal", "complete": false, "tag": ["capek", "bola"] },
+  { "todo": "saya pulang futsal", "complete": false, "tag": "" },
+  { "todo": "saya belajar coding", "complete": false, "tag": "" }
+]

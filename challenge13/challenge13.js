@@ -13,21 +13,7 @@ const rl = readline.createInterface({
 const argv2 = process.argv[2];
 const index = process.argv[3];
 const filter = process.argv[2];
-// if (argv2 == undefined) {
-//   console.log(`>>> JS TODO <<<
-//       $ node challenge13.js <command>
-//       $ node challenge13.js list
-//       $ node challenge13.js task <task_id>
-//       $ node challenge13.js add <task-content>
-//       $ node challenge13.js delete <task_id>
-//       $ node challenge13.js complete <task_id>
-//       $ node challenge13.js uncomplete <task_id>
-//       $ node challenge13.js list:outstanding asc|desc
-//       $ node challenge13.js list:completed asc|desc
-//       $ node challenge13.js tag <task_id> <tag_name_1> <tag_name2>...<tag_name_N>
-//       $ node challenge13.js filter:<tag_name>`);
-//   rl.close();
-// }
+
 const args = process.argv;
 let sentences = args.splice(3, argv.length);
 let words = sentences.join(" ");
