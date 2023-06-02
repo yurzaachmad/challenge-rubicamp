@@ -733,6 +733,120 @@ class matkul {
     listHome();
   }
 }
-function listKontrak() {
-  console.log("masuk jurusan");
+
+class kontrak {
+  static listKontrak() {
+    console.log(`
+    silahkan pilih opsi dibawah ini
+    [1] Daftar Kontrak
+    [2] Cari Kontrak
+    [3] Tambah Kontrak
+    [4] Hapus Kontrak
+    [5] Update Nilai
+    [6] Kembali`);
+
+    rl.question("masukkan salah satu nomor diatas: ", (index) => {
+      // console.log(index);
+      switch (index) {
+        case "1":
+          kontrak.daftarKontrak();
+          break;
+        case "2":
+          kontrak.matchingKontrak();
+          break;
+        case "3":
+          kontrak.addKontrak();
+          break;
+        case "4":
+          kontrak.deleteKontrak();
+          break;
+        case "5":
+          kontrak.UpdateKontrak();
+          break;
+        case "6":
+          kontrak.homeKontrak();
+          break;
+      }
+    });
+  }
+  static daftarKontrak() {
+    db.all(
+      `SELECT kontrak.idKontrak, mahasiswa.nim as nim, mahasiswa.nama AS nama_mahasiswa, mataKuliah.namaMataKuliah AS nama_mataKuliah, dosen.namaDosen as nama_dosen, kontrak.nilai
+      FROM kontrak 
+      JOIN mahasiswa ON kontrak.nim = mahasiswa.nim
+      JOIN dosen ON kontrak.nip = dosen.nip
+      JOIN mataKuliah ON kontrak.idMataKuliah = mataKuliah.idMataKuliah`,
+      (err, rows) => {
+        // console.log(rows);
+        if (err) {
+          console.error(err);
+        } else {
+          const table = new Table({
+            head: [
+              "ID",
+              "NIM",
+              "Nama Mahasiswa",
+              "Nama Matakuliah",
+              "Nama Dosen",
+              "Nilai",
+            ],
+            colWidths: [10, 10, 20, 25, 15, 10],
+          });
+          console.log(rows);
+          rows.forEach((row) => {
+            // console.log(row);
+            table.push([
+              row.idKontrak,
+              row.nim,
+              row.nama_mahasiswa,
+              row.nama_mataKuliah,
+              row.nama_dosen,
+              row.nilai,
+            ]);
+          });
+          console.log(table.toString());
+          kontrak.listKontrak();
+        }
+      }
+    );
+  }
+
+  static matchingKontrak() {
+    db.all(
+      `SELECT * FROM mahasiswa JOIN jurusan using(idJurusan)`,
+      (err, rows) => {
+        // console.log(rows);
+        if (err) {
+          console.error(err);
+        } else {
+          const table = new Table({
+            head: [
+              "NIM",
+              "Nama Mahasiswa",
+              "Tanggal lahir",
+              "Alamat",
+              "ID Jurusan",
+              "Nama Jurusan",
+            ],
+            colWidths: [10, 15, 15, 15, 15, 15],
+          });
+          console.log(rows);
+          rows.forEach((row) => {
+            // console.log(row);
+            table.push([
+              row.nim,
+              row.nama,
+              row.tanggalLahir,
+              row.alamat,
+              row.idJurusan,
+              row.namaJurusan,
+            ]);
+          });
+          console.log(table.toString());
+          //lanjut sini
+          kontrak.listKontrak();
+        }
+      }
+    );
+  }
 }
