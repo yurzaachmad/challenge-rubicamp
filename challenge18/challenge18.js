@@ -58,19 +58,16 @@ function listHome() {
         listJurusan();
         break;
       case "3":
-        console.log("masuk");
         listDosen();
         break;
       case "4":
-        console.log("masuk");
         listMatkul();
         break;
       case "5":
-        console.log("masuk");
         listKontrak();
         break;
       case "6":
-        console.log("masuk");
+        console.log("Anda telah keluar");
         login();
         break;
     }
@@ -103,10 +100,6 @@ function listMahasiswa() {
       case "5":
         mahasiswa.backHome();
         break;
-      // case "6":
-      //   console.log("masuk");
-      //   login();
-      //   break;
     }
   });
 }
@@ -967,5 +960,123 @@ class kontrak {
         }
       }
     );
+  }
+
+  static deleteKontrak() {
+    rl.question("Masukkan ID kontrak yang ingin dihapus :", (idKontrak) => {
+      db.run(
+        "delete from kontrak where idKontrak = ?",
+        [idKontrak],
+        function (err) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          if (this.changes > 0) {
+            console.log(`Kontrak dengan ID kontrak ${idKontrak} telah dihapus`);
+            listKontrak();
+          } else {
+            console.log(`Kontrak dengan ID ${idKontrak} tidak ada!`);
+            listKontrak();
+          }
+        }
+      );
+    });
+  }
+
+  static UpdateKontrak() {
+    db.all(
+      `SELECT kontrak.idKontrak, mahasiswa.nim as nim, mahasiswa.nama AS nama_mahasiswa, mataKuliah.namaMataKuliah AS nama_mataKuliah, dosen.namaDosen as nama_dosen, kontrak.nilai
+      FROM kontrak 
+      JOIN mahasiswa ON kontrak.nim = mahasiswa.nim
+      JOIN dosen ON kontrak.nip = dosen.nip
+      JOIN mataKuliah ON kontrak.idMataKuliah = mataKuliah.idMataKuliah`,
+      (err, rows) => {
+        // console.log(rows);
+        if (err) {
+          console.error(err);
+        } else {
+          const table = new Table({
+            head: [
+              "ID",
+              "NIM",
+              "Nama Mahasiswa",
+              "Nama Matakuliah",
+              "Nama Dosen",
+              "Nilai",
+            ],
+            colWidths: [10, 10, 20, 30, 15, 10],
+          });
+          // console.log(rows);
+          rows.forEach((row) => {
+            const rowData = [
+              row.idKontrak,
+              row.nim,
+              row.nama_mahasiswa,
+              row.nama_mataKuliah,
+              row.nama_dosen,
+              row.nilai || "",
+            ];
+            // console.log(row, "ini");
+            table.push(rowData);
+          });
+          console.log(table.toString());
+          rl.question("Masukkan nim mahasiswa: ", (nim) => {
+            db.all(
+              `select idKontrak, namaMataKuliah, nilai from kontrak join mataKuliah on mataKuliah.idMataKuliah = kontrak.idMataKuliah where nim = ?`,
+              [nim],
+              (err, rows) => {
+                if (err) {
+                  return console.log(err);
+                }
+                if (rows) {
+                  // console.log(rows);
+                  const table = new Table({
+                    head: ["ID Kontrak", "Nama Matakuliah", "Nilai"],
+                    colWidths: [15, 30, 10],
+                  });
+                  rows.forEach((row) => {
+                    const rowData = [
+                      row.idKontrak,
+                      row.namaMataKuliah,
+                      row.nilai || "",
+                    ];
+                    // console.log(row, "ini");
+                    table.push(rowData);
+                  });
+                  // console.log(row);
+                  console.log(table.toString());
+                  rl.question(
+                    "Masukan id yang akan dirubah nilainya :",
+                    (idKontrak) => {
+                      rl.question("Tulis nilai yang baru :", (nilai) => {
+                        db.run(
+                          "update kontrak set nilai = ? where idKontrak = ?",
+                          console.log(nilai, idKontrak),
+                          function (err) {
+                            if (err) {
+                              console.error(err);
+                            } else {
+                              kontrak.daftarKontrak();
+                            }
+                          }
+                        );
+                      });
+                    }
+                  );
+                } else {
+                  console.log(`Kontrak ${nim}, tidak terdaftar`);
+                  kontrak.daftarKontrak();
+                }
+              }
+            );
+          });
+        }
+      }
+    );
+  }
+
+  static homeKontrak() {
+    listHome();
   }
 }
