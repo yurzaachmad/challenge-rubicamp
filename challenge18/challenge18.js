@@ -52,22 +52,22 @@ function listHome() {
     // console.log(index);
     switch (index) {
       case "1":
-        mahasiswa.listMahasiswa();
+        listMahasiswa();
         break;
       case "2":
-        jurusan.listJurusan();
+        listJurusan();
         break;
       case "3":
         console.log("masuk");
-        dosen.listDosen();
+        listDosen();
         break;
       case "4":
         console.log("masuk");
-        matkul.listMatkul();
+        listMatkul();
         break;
       case "5":
         console.log("masuk");
-        kontrak.listKontrak();
+        listKontrak();
         break;
       case "6":
         console.log("masuk");
@@ -76,43 +76,42 @@ function listHome() {
     }
   });
 }
+function listMahasiswa() {
+  console.log(`
+  silahkan pilih opsi dibawah ini
+  [1] Daftar Mahasiswa
+  [2] Cari Mahasiswa
+  [3] Tambah Mahasiswa
+  [4] Hapus Mahasiswa
+  [5] Kembali`);
+
+  rl.question("masukkan salah satu nomor diatas: ", (index) => {
+    // console.log(index);
+    switch (index) {
+      case "1":
+        mahasiswa.daftarMahasiswa();
+        break;
+      case "2":
+        mahasiswa.matchingMahasiswa();
+        break;
+      case "3":
+        mahasiswa.addMahasiswa();
+        break;
+      case "4":
+        mahasiswa.deleteMahasiswa();
+        break;
+      case "5":
+        mahasiswa.backHome();
+        break;
+      // case "6":
+      //   console.log("masuk");
+      //   login();
+      //   break;
+    }
+  });
+}
 // menampilkan pilihan mahasiswa
 class mahasiswa {
-  static listMahasiswa() {
-    console.log(`
-    silahkan pilih opsi dibawah ini
-    [1] Daftar Mahasiswa
-    [2] Cari Mahasiswa
-    [3] Tambah Mahasiswa
-    [4] Hapus Mahasiswa
-    [5] Kembali`);
-
-    rl.question("masukkan salah satu nomor diatas: ", (index) => {
-      // console.log(index);
-      switch (index) {
-        case "1":
-          mahasiswa.daftarMahasiswa();
-          break;
-        case "2":
-          mahasiswa.matchingMahasiswa();
-          break;
-        case "3":
-          mahasiswa.addMahasiswa();
-          break;
-        case "4":
-          mahasiswa.deleteMahasiswa();
-          break;
-        case "5":
-          mahasiswa.backHome();
-          break;
-        // case "6":
-        //   console.log("masuk");
-        //   login();
-        //   break;
-      }
-    });
-  }
-
   // Menampilkan daftar mahasiswa
   static daftarMahasiswa() {
     db.all(
@@ -138,7 +137,7 @@ class mahasiswa {
             ]);
           });
           console.log(table.toString());
-          mahasiswa.listMahasiswa();
+          listMahasiswa();
         }
       }
     );
@@ -167,10 +166,10 @@ class mahasiswa {
             ]);
             // console.log(row);
             console.log(table.toString());
-            mahasiswa.listMahasiswa();
+            listMahasiswa();
           } else {
             console.log(`Mahasiswa dengan nim ${NIM}, tidak terdaftar`);
-            mahasiswa.listMahasiswa();
+            listMahasiswa();
           }
         }
       );
@@ -250,10 +249,10 @@ class mahasiswa {
         }
         if (this.changes > 0) {
           console.log(`Mahasiswa dengan nim ${nim} telah dihapus`);
-          mahasiswa.listMahasiswa();
+          listMahasiswa();
         } else {
           console.log(`Mahasiswa dengan nim ${nim} tidak ada!`);
-          mahasiswa.listMahasiswa();
+          listMahasiswa();
         }
       });
     });
@@ -266,38 +265,39 @@ class mahasiswa {
   }
 }
 
+function listJurusan() {
+  console.log(`
+  silahkan pilih opsi dibawah ini
+  [1] Daftar Jurusan
+  [2] Cari Jurusan
+  [3] Tambah Jurusan
+  [4] Hapus Jurusan
+  [5] Kembali`);
+
+  rl.question("masukkan salah satu nomor diatas: ", (index) => {
+    // console.log(index);
+    switch (index) {
+      case "1":
+        jurusan.daftarJurusan();
+        break;
+      case "2":
+        jurusan.matchingJurusan();
+        break;
+      case "3":
+        jurusan.addJurusan();
+        break;
+      case "4":
+        jurusan.deleteJurusan();
+        break;
+      case "5":
+        jurusan.homeJurusan();
+        break;
+    }
+  });
+}
+
 // masuk ke menu jurusan
 class jurusan {
-  static listJurusan() {
-    console.log(`
-    silahkan pilih opsi dibawah ini
-    [1] Daftar Jurusan
-    [2] Cari Jurusan
-    [3] Tambah Jurusan
-    [4] Hapus Jurusan
-    [5] Kembali`);
-
-    rl.question("masukkan salah satu nomor diatas: ", (index) => {
-      // console.log(index);
-      switch (index) {
-        case "1":
-          jurusan.daftarJurusan();
-          break;
-        case "2":
-          jurusan.matchingJurusan();
-          break;
-        case "3":
-          jurusan.addJurusan();
-          break;
-        case "4":
-          jurusan.deleteJurusan();
-          break;
-        case "5":
-          jurusan.homeJurusan();
-          break;
-      }
-    });
-  }
   static daftarJurusan() {
     db.all("SELECT * FROM jurusan", (err, rows) => {
       // console.log(rows);
@@ -314,7 +314,7 @@ class jurusan {
           table.push([row.idJurusan, row.namaJurusan]);
         });
         console.log(table.toString());
-        jurusan.listJurusan();
+        listJurusan();
       }
     });
   }
@@ -335,10 +335,10 @@ class jurusan {
             table.push([row.idJurusan, row.namaJurusan]);
             // console.log(row);
             console.log(table.toString());
-            jurusan.listJurusan();
+            listJurusan();
           } else {
             console.log(`Jurusan dengan kode ${NIM}, tidak terdaftar`);
-            jurusan.listJurusan();
+            listJurusan();
           }
         }
       );
@@ -408,10 +408,10 @@ class jurusan {
           }
           if (this.changes > 0) {
             console.log(`Jurusan dengan ID ${idJurusan} telah dihapus`);
-            jurusan.listJurusan();
+            listJurusan();
           } else {
             console.log(`Jurusan dengan ID ${idJurusan} tidak ada!`);
-            jurusan.listJurusan();
+            listJurusan();
           }
         }
       );
@@ -421,39 +421,38 @@ class jurusan {
     listHome();
   }
 }
+function listDosen() {
+  console.log(`
+  silahkan pilih opsi dibawah ini
+  [1] Daftar Dosen
+  [2] Cari Dosen
+  [3] Tambah Dosen
+  [4] Hapus Dosen
+  [5] Kembali`);
 
+  rl.question("masukkan salah satu nomor diatas: ", (index) => {
+    // console.log(index);
+    switch (index) {
+      case "1":
+        dosen.daftarDosen();
+        break;
+      case "2":
+        dosen.matchingDosen();
+        break;
+      case "3":
+        dosen.addDosen();
+        break;
+      case "4":
+        dosen.deleteDosen();
+        break;
+      case "5":
+        dosen.homeDosen();
+        break;
+    }
+  });
+}
 // masuk ke menu dosen
 class dosen {
-  static listDosen() {
-    console.log(`
-    silahkan pilih opsi dibawah ini
-    [1] Daftar Dosen
-    [2] Cari Dosen
-    [3] Tambah Dosen
-    [4] Hapus Dosen
-    [5] Kembali`);
-
-    rl.question("masukkan salah satu nomor diatas: ", (index) => {
-      // console.log(index);
-      switch (index) {
-        case "1":
-          dosen.daftarDosen();
-          break;
-        case "2":
-          dosen.matchingDosen();
-          break;
-        case "3":
-          dosen.addDosen();
-          break;
-        case "4":
-          dosen.deleteDosen();
-          break;
-        case "5":
-          dosen.homeDosen();
-          break;
-      }
-    });
-  }
   static daftarDosen() {
     db.all("SELECT * FROM dosen", (err, rows) => {
       // console.log(rows);
@@ -470,7 +469,7 @@ class dosen {
           table.push([row.nip, row.namaDosen, row.alamat]);
         });
         console.log(table.toString());
-        dosen.listDosen();
+        listDosen();
       }
     });
   }
@@ -488,10 +487,10 @@ class dosen {
           table.push([row.nip, row.namaDosen, row.alamat]);
           // console.log(row);
           console.log(table.toString());
-          dosen.listDosen();
+          listDosen();
         } else {
           console.log(`Dosen dengan nip ${kode}, tidak terdaftar`);
-          dosen.listDosen();
+          listDosen();
         }
       });
     });
@@ -560,10 +559,10 @@ class dosen {
         }
         if (this.changes > 0) {
           console.log(`Dosen dengan NIP ${nip} telah dihapus`);
-          dosen.listDosen();
+          listDosen();
         } else {
           console.log(`Dosen dengan NIP ${nip} tidak ada!`);
-          dosen.listDosen();
+          listDosen();
         }
       });
     });
@@ -573,38 +572,38 @@ class dosen {
   }
 }
 
+function listMatkul() {
+  console.log(`
+  silahkan pilih opsi dibawah ini
+  [1] Daftar Matakuliah
+  [2] Cari Matakuliah
+  [3] Tambah Matakuliah
+  [4] Hapus Matakuliah
+  [5] Kembali`);
+
+  rl.question("masukkan salah satu nomor diatas: ", (index) => {
+    // console.log(index);
+    switch (index) {
+      case "1":
+        matkul.daftarMatkul();
+        break;
+      case "2":
+        matkul.matchingMatkul();
+        break;
+      case "3":
+        matkul.addMatkul();
+        break;
+      case "4":
+        matkul.deleteMatkul();
+        break;
+      case "5":
+        matkul.homeMatkul();
+        break;
+    }
+  });
+}
 // masuk ke menu mata kuliah
 class matkul {
-  static listMatkul() {
-    console.log(`
-    silahkan pilih opsi dibawah ini
-    [1] Daftar Matakuliah
-    [2] Cari Matakuliah
-    [3] Tambah Matakuliah
-    [4] Hapus Matakuliah
-    [5] Kembali`);
-
-    rl.question("masukkan salah satu nomor diatas: ", (index) => {
-      // console.log(index);
-      switch (index) {
-        case "1":
-          matkul.daftarMatkul();
-          break;
-        case "2":
-          matkul.matchingMatkul();
-          break;
-        case "3":
-          matkul.addMatkul();
-          break;
-        case "4":
-          matkul.deleteMatkul();
-          break;
-        case "5":
-          matkul.homeMatkul();
-          break;
-      }
-    });
-  }
   static daftarMatkul() {
     db.all("SELECT * FROM mataKuliah", (err, rows) => {
       // console.log(rows);
@@ -613,7 +612,7 @@ class matkul {
       } else {
         const table = new Table({
           head: ["Id Matakuliah", "Nama Matakuliah", "SKS"],
-          colWidths: [15, 15, 10],
+          colWidths: [15, 20, 10],
         });
         // console.log(rows);
         rows.forEach((row) => {
@@ -621,7 +620,7 @@ class matkul {
           table.push([row.idMataKuliah, row.namaMataKuliah, row.sks]);
         });
         console.log(table.toString());
-        matkul.listMatkul();
+        listMatkul();
       }
     });
   }
@@ -642,10 +641,10 @@ class matkul {
             table.push([row.idMataKuliah, row.namaMataKuliah, row.sks]);
             // console.log(row);
             console.log(table.toString());
-            matkul.listMatkul();
+            listMatkul();
           } else {
             console.log(`Matakuliah dengan id ${kode}, tidak terdaftar`);
-            matkul.listMatkul();
+            listMatkul();
           }
         }
       );
@@ -719,10 +718,10 @@ class matkul {
           }
           if (this.changes > 0) {
             console.log(`Matakuliah dengan ID ${ID} telah dihapus`);
-            matkul.listMatkul();
+            listMatkul();
           } else {
             console.log(`Matakuliah dengan ID ${ID} tidak ada!`);
-            matkul.listMatkul();
+            listMatkul();
           }
         }
       );
@@ -734,41 +733,42 @@ class matkul {
   }
 }
 
-class kontrak {
-  static listKontrak() {
-    console.log(`
-    silahkan pilih opsi dibawah ini
-    [1] Daftar Kontrak
-    [2] Cari Kontrak
-    [3] Tambah Kontrak
-    [4] Hapus Kontrak
-    [5] Update Nilai
-    [6] Kembali`);
+function listKontrak() {
+  console.log(`
+  silahkan pilih opsi dibawah ini
+  [1] Daftar Kontrak
+  [2] Cari Kontrak
+  [3] Tambah Kontrak
+  [4] Hapus Kontrak
+  [5] Update Nilai
+  [6] Kembali`);
 
-    rl.question("masukkan salah satu nomor diatas: ", (index) => {
-      // console.log(index);
-      switch (index) {
-        case "1":
-          kontrak.daftarKontrak();
-          break;
-        case "2":
-          kontrak.matchingKontrak();
-          break;
-        case "3":
-          kontrak.addKontrak();
-          break;
-        case "4":
-          kontrak.deleteKontrak();
-          break;
-        case "5":
-          kontrak.UpdateKontrak();
-          break;
-        case "6":
-          kontrak.homeKontrak();
-          break;
-      }
-    });
-  }
+  rl.question("masukkan salah satu nomor diatas: ", (index) => {
+    // console.log(index);
+    switch (index) {
+      case "1":
+        kontrak.daftarKontrak();
+        break;
+      case "2":
+        kontrak.matchingKontrak();
+        break;
+      case "3":
+        kontrak.addKontrak();
+        break;
+      case "4":
+        kontrak.deleteKontrak();
+        break;
+      case "5":
+        kontrak.UpdateKontrak();
+        break;
+      case "6":
+        kontrak.homeKontrak();
+        break;
+    }
+  });
+}
+
+class kontrak {
   static daftarKontrak() {
     db.all(
       `SELECT kontrak.idKontrak, mahasiswa.nim as nim, mahasiswa.nama AS nama_mahasiswa, mataKuliah.namaMataKuliah AS nama_mataKuliah, dosen.namaDosen as nama_dosen, kontrak.nilai
@@ -790,22 +790,23 @@ class kontrak {
               "Nama Dosen",
               "Nilai",
             ],
-            colWidths: [10, 10, 20, 25, 15, 10],
+            colWidths: [10, 10, 20, 30, 15, 10],
           });
-          console.log(rows);
+          // console.log(rows);
           rows.forEach((row) => {
-            // console.log(row);
-            table.push([
+            const rowData = [
               row.idKontrak,
               row.nim,
               row.nama_mahasiswa,
               row.nama_mataKuliah,
               row.nama_dosen,
-              row.nilai,
-            ]);
+              row.nilai || "",
+            ];
+            // console.log(row, "ini");
+            table.push(rowData);
           });
           console.log(table.toString());
-          kontrak.listKontrak();
+          listKontrak();
         }
       }
     );
@@ -830,7 +831,7 @@ class kontrak {
             ],
             colWidths: [10, 15, 15, 15, 15, 15],
           });
-          console.log(rows);
+          // console.log(rows);
           rows.forEach((row) => {
             // console.log(row);
             table.push([
@@ -843,8 +844,126 @@ class kontrak {
             ]);
           });
           console.log(table.toString());
-          //lanjut sini
-          kontrak.listKontrak();
+          rl.question("Masukkan nim mahasiswa :", (nim) => {
+            db.all(
+              `SELECT * FROM kontrak WHERE nim = ?`,
+              [nim],
+              (err, rows) => {
+                if (err) {
+                  return console.log(err);
+                }
+                if (rows.length > 1) {
+                  const table = new Table({
+                    head: ["ID", "NIM", "idMataKuliah", "nip", "nilai"],
+                    colWidths: [10, 15, 15, 20, 20],
+                  });
+                  rows.forEach((row) => {
+                    table.push([
+                      row.idKontrak,
+                      row.nim,
+                      row.idMataKuliah,
+                      row.nip,
+                      row.nilai,
+                    ]);
+                  });
+                  // console.log(rows);
+                  console.log(table.toString());
+                  listKontrak();
+                } else {
+                  // console.log(row);
+                  console.log(
+                    `Mahasiswa dengan nim ${nim}, tidak terdaftar dalam kontrak`
+                  );
+                  listKontrak();
+                }
+              }
+            );
+          });
+        }
+      }
+    );
+  }
+
+  static addKontrak() {
+    console.log("Lengkapi data dibawah ini: ");
+    db.all(
+      "select * from mahasiswa join jurusan using(idJurusan)",
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const table = new Table({
+            head: [
+              "NIM",
+              "Nama",
+              "Tanggal Lahir",
+              "Alamat",
+              "ID Jurusan",
+              "Nama Jurusan",
+            ],
+            colWidths: [10, 10, 20, 15, 15, 20],
+          });
+          rows.forEach((row) => {
+            table.push([
+              row.nim,
+              row.nama,
+              row.tanggalLahir,
+              row.alamat,
+              row.idJurusan,
+              row.namaJurusan,
+            ]);
+          });
+          console.log(table.toString());
+          rl.question("Masukkan nim : ", (nim) => {
+            db.all("select * from mataKuliah", (err, rows) => {
+              if (err) {
+                console.log(err);
+              }
+              if (rows) {
+                const table = new Table({
+                  head: ["Kode Matkul", "Nama Matkul", "SKS"],
+                  colWidths: [15, 30, 10],
+                });
+                rows.forEach((row) => {
+                  table.push([row.idMataKuliah, row.namaMataKuliah, row.sks]);
+                });
+                console.log(table.toString());
+              }
+              rl.question("Masukkan kode matakuliah : ", (idMataKuliah) => {
+                // console.log(nim, idMataKuliah);
+                db.all("select * from dosen", (err, rows) => {
+                  if (err) {
+                    console.log(err);
+                  }
+                  if (rows) {
+                    const table = new Table({
+                      head: ["NIP", "Nama Dosen"],
+                      colWidths: [10, 15],
+                    });
+                    rows.forEach((row) => {
+                      table.push([row.nip, row.namaDosen]);
+                    });
+                    console.log(table.toString());
+                    rl.question("Masukkan nip dosen :", (nip) => {
+                      console.log(nim, idMataKuliah, nip);
+                      db.run(
+                        "insert into kontrak(nim, idMataKuliah, nip) values(?, ?, ?)",
+                        [nim, idMataKuliah, nip],
+                        (err, rows) => {
+                          if (err) {
+                            console.log(err);
+                          } else {
+                            console.log("data insertsukses");
+                            kontrak.daftarKontrak();
+                          }
+                        }
+                      );
+                    });
+                  }
+                });
+              });
+            });
+          });
         }
       }
     );
