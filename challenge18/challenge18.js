@@ -837,7 +837,7 @@ class kontrak {
             ]);
           });
           console.log(table.toString());
-          rl.question("Masukkan nim mahasiswa :", (nim) => {
+          rl.question("Masukkan nim mahasiswa: ", (nim) => {
             db.all(
               `SELECT * FROM kontrak WHERE nim = ?`,
               [nim],
@@ -845,27 +845,38 @@ class kontrak {
                 if (err) {
                   return console.log(err);
                 }
-                if (rows.length > 1) {
+                if (rows && rows.length > 0) {
                   const table = new Table({
                     head: ["ID", "NIM", "idMataKuliah", "nip", "nilai"],
                     colWidths: [10, 15, 15, 20, 20],
                   });
-                  rows.forEach((row) => {
-                    table.push([
+                  if (rows.length === 1) {
+                    const row = rows[0];
+                    const rowdata = [
                       row.idKontrak,
                       row.nim,
                       row.idMataKuliah,
                       row.nip,
-                      row.nilai,
-                    ]);
-                  });
-                  // console.log(rows);
+                      row.nilai || "",
+                    ];
+                    table.push(rowdata);
+                  } else {
+                    rows.forEach((row) => {
+                      const rowData = [
+                        row.idKontrak,
+                        row.nim,
+                        row.idMataKuliah,
+                        row.nip,
+                        row.nilai || "",
+                      ];
+                      table.push(rowData);
+                    });
+                  }
                   console.log(table.toString());
                   listKontrak();
                 } else {
-                  // console.log(row);
                   console.log(
-                    `Mahasiswa dengan nim ${nim}, tidak terdaftar dalam kontrak`
+                    `Mahasiswa dengan nim ${nim} tidak terdaftar dalam kontrak`
                   );
                   listKontrak();
                 }
@@ -1047,17 +1058,18 @@ class kontrak {
                   // console.log(row);
                   console.log(table.toString());
                   rl.question(
-                    "Masukan id yang akan dirubah nilainya :",
+                    "Masukkan ID yang akan dirubah nilainya: ",
                     (idKontrak) => {
-                      rl.question("Tulis nilai yang baru :", (nilai) => {
+                      rl.question("Tulis nilai yang baru: ", (nilai) => {
                         db.run(
-                          "update kontrak set nilai = ? where idKontrak = ?",
-                          console.log(nilai, idKontrak),
+                          "UPDATE kontrak SET nilai = ? WHERE idKontrak = ?",
+                          [nilai, idKontrak],
                           function (err) {
                             if (err) {
                               console.error(err);
                             } else {
-                              kontrak.daftarKontrak();
+                              console.log("Nilai kontrak berhasil diperbarui.");
+                              kontrak.daftarKontrak(); // Panggil metode daftarKontrak() jika diperlukan
                             }
                           }
                         );
