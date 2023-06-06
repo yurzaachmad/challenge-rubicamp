@@ -81,6 +81,10 @@ export default class MahasiswaController {
         case "5":
           UserController.mainMenu();
           break;
+        default:
+          console.log("Anda salah memasukkan opsi");
+          MahasiswaController.menuMahasiswa();
+          break;
       }
     });
   }

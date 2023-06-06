@@ -76,7 +76,9 @@ silahkan pilih opsi di bawah ini :
           printPembatas();
           process.exit(0);
         default:
-          mainMenu();
+          printPembatas();
+          console.log("Anda salah memasukkan opsi");
+          UserController.mainMenu();
           break;
       }
     });

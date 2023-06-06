@@ -1,6 +1,4 @@
 import { printPembatas, rl } from "../views/util.js";
-import jurusanModel from "../models/jurusan.js";
-import jurusanView from "../views/jurusan.js";
 import UserController from "./users.js";
 import matakuliahModel from "../models/matakuliah.js";
 import matakuliahView from "../views/matakuliah.js";
@@ -70,6 +68,10 @@ silahkan pilih opsi dibawah ini
           break;
         case "5":
           UserController.mainMenu();
+          break;
+        default:
+          console.log("Anda salah memasukkan opsi");
+          MatakuliahController.menuMatakuliah();
           break;
       }
     });

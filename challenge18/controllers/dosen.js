@@ -1,8 +1,4 @@
 import { printPembatas, rl } from "../views/util.js";
-import mahasiswaModel from "../models/mahasiswa.js";
-import mahasiswaView from "../views/mahasiswa.js";
-import jurusanModel from "../models/jurusan.js";
-import jurusanView from "../views/jurusan.js";
 import UserController from "./users.js";
 import dosenModel from "../models/dosen.js";
 import dosenView from "../views/dosen.js";
@@ -68,6 +64,10 @@ silahkan pilih opsi dibawah ini
         case "5":
           printPembatas();
           UserController.mainMenu();
+          break;
+        default:
+          console.log("Anda salah memasukkan opsi");
+          DosenController.menuDosen();
           break;
       }
     });

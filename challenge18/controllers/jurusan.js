@@ -62,6 +62,10 @@ silahkan pilih opsi dibawah ini
         case "5":
           UserController.mainMenu();
           break;
+        default:
+          console.log("Anda salah memasukkan opsi");
+          JurusanController.menuJurusan();
+          break;
       }
     });
   }

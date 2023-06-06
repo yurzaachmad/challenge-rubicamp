@@ -1,8 +1,6 @@
 import { printPembatas, rl } from "../views/util.js";
 import mahasiswaModel from "../models/mahasiswa.js";
 import mahasiswaView from "../views/mahasiswa.js";
-import jurusanModel from "../models/jurusan.js";
-import jurusanView from "../views/jurusan.js";
 import UserController from "./users.js";
 import kontrakModel from "../models/kontrak.js";
 import kontrakView from "../views/kontrak.js";
@@ -106,6 +104,13 @@ export default class KontrakController {
             });
           });
           //   kontrakModel.updateKontrak();
+          break;
+        case "6":
+          UserController.mainMenu();
+          break;
+        default:
+          console.log("Anda salah memasukkan opsi");
+          KontrakController.menuKontrak();
           break;
       }
     });
