@@ -4,6 +4,7 @@ import MahasiswaController from "./mahasiswa.js";
 import JurusanController from "./jurusan.js";
 import DosenController from "./dosen.js";
 import MatakuliahController from "./matakuliah.js";
+import KontrakController from "./kontrak.js";
 
 export default class UserController {
   static start() {
