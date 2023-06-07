@@ -2,7 +2,7 @@ const readline = require('node:readline');
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
-  prompt: 'Tulis kalimatmu disini> ',
+  prompt: 'Tulis kalimatmu disini ',
 });
 
 rl.prompt();
