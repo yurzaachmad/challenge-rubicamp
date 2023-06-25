@@ -1,5 +1,5 @@
 const sqlite3 = require("sqlite3").verbose();
-
+//versi full
 var Table = require("cli-table");
 const readline = require("node:readline");
 const db = new sqlite3.Database("university.db");
